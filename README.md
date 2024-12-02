@@ -6,7 +6,8 @@ This project was born out of a desire to recreate the classic Pong game using an
 Every line of code and component has been thought to bring a nostalgic experience to life, combining passion for hardware and software in an accessible and fun way.
 
 ## How to play
-The game is very simple and intuitive to play: the game is usually played by 2 people, but in this project I will implement that the game can be played by one person as well.  
+The game is very simple and intuitive to play: the game is usually played by 2 people, but in this project I will implement that the game can be played by one person as well. The game consists in passing a ball from one player to another without losing the ball. To pass the ball players use a paddle.  
+The game contains walls at the top and bottom for the ball to hit them to reach the other player. There are no walls on the left and right sides, there are paddles that move from above in the game controlled by the joystick.  
 The game will be played on the 8x8 LED matrix in which 2 paddles will appear that will measure 2 hoops in height and one hoop in width and a ball of one square length and width.  
 
 Objective: 

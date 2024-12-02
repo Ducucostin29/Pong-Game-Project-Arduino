@@ -55,4 +55,8 @@ The menu contains the following submenus:
 
 ## Wiring Diagram (TinkerCAD)
 
+## Conclusions
+
+## Bibliography
+
 

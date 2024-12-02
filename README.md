@@ -31,4 +31,10 @@ If the difficulty of the game is set to easy, which means that the ball moves qu
 - 104 ceramic capacitor
 - 1x Button
 
+## Pictures of the physical setup
+
+## Video with physical assembly functionality
+
+## Wiring Diagram (TinkerCAD)
+
 

@@ -16,4 +16,19 @@ Objective:
 
 If the difficulty of the game is set to easy, which means that the ball moves quite slowly and the paddles faster so that the players can catch the ball. The higher the difficulty, the faster the ball will move and the slower the paddles
 
+## Components
+- 2x 8x8 LED matrix
+- 1x Matrix Shield
+- 2x RGB LED (1 for each player)
+- 2x Joystick
+- 1x Buzzer
+- 1x LCD
+- 2x Potentiometers(1 for LCD contrast, 1 for buzzer volume)
+- 1x Breadboard
+- Resistors
+- Cables
+- Arduino Uno Board
+- 104 ceramic capacitor
+- 1x Button
+
 

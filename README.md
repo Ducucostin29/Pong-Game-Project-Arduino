@@ -51,6 +51,8 @@ The menu contains the following submenus:
 
 ## Pictures of the physical setup
 
+## Wiring Diagram (TinkerCAD)
+
 ## Video with physical assembly functionality
 
 ## Wiring Diagram (TinkerCAD)

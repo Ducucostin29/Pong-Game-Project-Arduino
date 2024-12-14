@@ -30,7 +30,6 @@ If the difficulty of the game is set to easy, which means that the ball moves qu
 - Cables
 - Arduino Uno Board
 - 104 ceramic capacitor
-- 1x Button
 
 ## How to use the menu
 When the board is plugging in, a message appears on the LCD and a animation appears on the matrix. The user must press the button of the joystick to access the menu. At the end of the game, an interesting animation will appear again along with some ending sounds.  

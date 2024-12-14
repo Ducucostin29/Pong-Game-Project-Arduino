@@ -19,8 +19,8 @@ If the difficulty of the game is set to easy, which means that the ball moves qu
 
 ## Components
 - 2x 8x8 LED matrix
-- 1x Matrix Shield
-- 2x RGB LED (1 for each player)
+- 1x Led matrix module 4x max7219
+- 2X Led (Red for player 1 , Blue for player 2)
 - 2x Joystick
 - 1x Buzzer
 - 1x LCD
@@ -29,7 +29,6 @@ If the difficulty of the game is set to easy, which means that the ball moves qu
 - Resistors
 - Cables
 - Arduino Uno Board
-- 104 ceramic capacitor
 
 ## How to use the menu
 When the board is plugging in, a message appears on the LCD and a animation appears on the matrix. The user must press the button of the joystick to access the menu. At the end of the game, an interesting animation will appear again along with some ending sounds.  

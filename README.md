@@ -35,13 +35,10 @@ When the board is plugging in, a message appears on the LCD and a animation appe
 The menu contains the following submenus:  
 - Start game
 - Settings
-  - The names of the players: one of the users can enter their name(but  only 6 characters)
-  - LCD brightness: one of the users can set the brightness of the LCD
   - Matrix brightness: one of the users can set the brightness of the matrix
   - Difficulty: one of the users can choose between easy, medium and hard (the ball and the paddles speed)
   - Sounds: one of the users can choose between sounds on or off
   - Score system: display real-time scores and Game Over when a limit is reached one of the users can choose between score is on or off
-  - Power-ups: one of the users can choose between power-ups are on or off (Expanding the palette; Acceleration/deceleration of the ball)
   - Game mod: single player(against computer) or 1v1
 - How to play - information about the game
 - About - information about the author

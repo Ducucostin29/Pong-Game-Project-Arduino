@@ -50,19 +50,19 @@ Astfel, în timp ce majoritatea jocurilor Pong tradiționale includ două palete
 
 ## Utilizarea funcționalităților din laborator în cadrul proiectului
 
-# 1. SPI (Serial Peripheral Interface)
+### 1. SPI (Serial Peripheral Interface)
 SPI este un protocol de comunicație serială utilizat pentru a transmite date între microcontroler și diverse periferice. În acest proiect, SPI este utilizat pentru a comunica cu matricea LED (utilizând biblioteca MD_MAX72XX), care este folosită pentru a afișa starea jocului.
 
 Justificare: SPI a fost aleasă pentru comunicarea cu matricea LED datorită vitezei și eficienței sale. Spre deosebire de alte protocoale de comunicație serială, SPI permite transmiterea rapidă și de mare viteză a datelor între microcontroler și matricea LED, esențială pentru a reda jocul în timp real, cu actualizări vizuale rapide și fără întârzieri semnificative. Acest lucru este important pentru a asigura o experiență de joc fluidă.
 
-# 2. Interrupts (Interupții)
+### 2. Interrupts (Interupții)
 În proiect, se folosește un interrupt pentru a detecta apăsările butonului joystick-ului (prin pinul joystick1SW). Acesta este configurat pentru a declanșa o rutină de întrerupere atunci când butonul este apăsat (FALLING).
 
 Justificare: Utilizarea întreruperilor este esențială pentru a răspunde în mod eficient și rapid la evenimente externe, precum apăsarea butonului. În loc să verificăm constant starea butonului într-o buclă principală (ceea ce ar consuma resurse și ar introduce întârzieri), întreruperile permit microcontrolerului să reacționeze imediat atunci când butonul este apăsat, fără a întrerupe restul logicii programului.
 
 Astfel, întreruperea este folosită pentru a începe sau opri jocul în funcție de starea meniului, asigurând o interacțiune rapidă și eficientă din partea utilizatorului.
 
-# 3. Debouncing
+### 3. Debouncing
 Debouncing se referă la tehnica de a filtra semnalele false (de obicei, fluctuațiile electrice) care pot apărea atunci când un buton este apăsat sau eliberat. Fără debouncing, un singur click ar putea fi înregistrat de mai multe ori din cauza oscilațiilor în semnalul electric, ceea ce ar putea duce la comportamente neașteptate ale jocului.
 
 Justificare: În cazul acestui proiect, debouncing-ul este implementat pentru a preveni apăsările multiple ale butonului joystick-ului, ceea ce ar putea provoca intrări multiple și necontrolate în meniul jocului. Acesta se realizează prin verificarea timpului între acțiuni, asigurându-se că doar o apăsare reală a butonului este înregistrată (fie prin verificarea întreruperii cu un decalaj de timp minim, fie prin utilizarea unui algoritm care ignoră fluctuațiile rapide de semnal).
@@ -71,7 +71,7 @@ Justificare: În cazul acestui proiect, debouncing-ul este implementat pentru a 
 
 ## Explicați cum, de ce și unde ați realizat optimizări
 
-# 1. Optimizarea actualizării display-ului cu matricea LED
+### 1. Optimizarea actualizării display-ului cu matricea LED
 Cum: Utilizarea funcției displayAnimate() din biblioteca MD_Parola pentru a actualiza display-ul doar atunci când este necesar. Acesta ajută la menținerea unui framerate constant și previne supraîncărcarea cu actualizări inutile. De ce: Dacă am actualiza display-ul de fiecare dată în fiecare ciclu al buclei principale, acest lucru ar duce la o utilizare mai mare a resurselor procesorului și ar încetini performanța jocului. Astfel, am ales să actualizăm display-ul doar atunci când este necesar. Unde: În funcția loop(), folosind myDisplay.displayAnimate() și myDisplay.displayReset() pentru a se asigura că actualizarea display-ului se face doar atunci când animarea este completă și este nevoie de o nouă actualizare.
 
 ```
@@ -82,14 +82,14 @@ if (millis() > future) {
 }
 ```
 
-# 2. Optimizarea vitezei jocului în funcție de dificultate
+### 2. Optimizarea vitezei jocului în funcție de dificultate
 Cum: Viteza bilei a fost ajustată în funcție de dificultate, utilizând un multiplicator de viteză care scade timpul între mișcările bilei pe măsură ce dificultatea crește. De ce: Prin ajustarea vitezei bilei în funcție de dificultate, am creat o experiență de joc mai provocatoare pentru utilizatorii care aleg un nivel mai greu, fără a compromite performanța la nivelele mai ușoare. Unde: În funcția loop(), timpul de actualizare al bilei este ajustat în funcție de dificultate.
 
 ```
 future = millis() + 100 - difficulty * 30; // Adjust speed based on difficulty
 ```
 
-# 3. Reducerea consumului de memorie
+### 3. Reducerea consumului de memorie
 Cum: Am utilizat variabile globale și structuri de date optimizate pentru a economisi memorie, cum ar fi utilizarea unui tablou pentru stocarea stării jocului și a paletelor, și am redus numărul de variabile temporare care ar fi putut să consume memorie suplimentară. De ce: Întrucât microcontrolerele de tip Arduino au o memorie limitată, optimizarea memoriei este esențială pentru a preveni depășirea resurselor disponibile și pentru a asigura rularea corectă a jocului. Unde: În structurile de date, cum ar fi t_Position și t_Ball, și în variabilele care stochează starea jocului și scorurile.
 
 ```

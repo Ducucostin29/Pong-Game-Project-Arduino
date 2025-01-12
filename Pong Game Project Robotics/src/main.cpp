@@ -1,8 +1,8 @@
 #include <LiquidCrystal.h>
 /**
  * Motivatie:
- * Această bibliotecă este folosită pentru a controla un LCD cu interfață paralelă, 
- * de obicei un display cu 16x2 caractere. Este o alegere foarte comună pentru a afișa 
+ * Această bibliotecă este folosită pentru a controla un LCD cu interfață paralelă,
+ * de obicei un display cu 16x2 caractere. Este o alegere foarte comună pentru a afișa
  * informații simple, cum ar fi scoruri, mesaje de stare, sau pentru interacțiuni cu utilizatorul (ex. meniu).
  * LiquidCrystal permite controlul eficient al unui astfel de display, oferind funcții de bază
  * pentru a scrie caractere și a manipula cursorul.
@@ -70,12 +70,12 @@ MD_MAX72XX myMatrix = MD_MAX72XX(HARDWARE_TYPE, CS_PIN, MAX_DEVICES);
 // Menu and settings variables for user interaction and game configuration
 const String menuInput[4] = {"Start game", "Settings", "How to play", "About"};
 const String settings[8] = {"Matrix bright.", "Difficulty", "Sounds", "Score", "Game mod"};
-int matrixBrightness = 7;  // Initial brightness level for the LED matrix
-int difficulty = 1;        // Game difficulty (0 = easy, 1 = medium, 2 = hard)
-bool sounds = true;        // Sound setting (enabled by default)
-bool scoreEnabled = true;  // Score display setting (enabled by default)
-bool gameModeSinglePlayer = true; // Game mode (single player by default)
-const char *name = "Apostu Alexandru-Costin"; // Developer name
+int matrixBrightness = 7;                       // Initial brightness level for the LED matrix
+int difficulty = 1;                             // Game difficulty (0 = easy, 1 = medium, 2 = hard)
+bool sounds = true;                             // Sound setting (enabled by default)
+bool scoreEnabled = true;                       // Score display setting (enabled by default)
+bool gameModeSinglePlayer = true;               // Game mode (single player by default)
+const char *name = "Apostu Alexandru-Costin";   // Developer name
 const char *github = "github.com/Ducucostin29"; // Developer's GitHub page
 
 // Player scores initialization
@@ -85,9 +85,9 @@ int player1Score = 0, player2Score = 0;
 volatile bool buttonPressed = false; // Used in ISR to detect button press
 
 // Menu navigation and settings control variables
-int menuIndex = 0; // Current menu selection index
+int menuIndex = 0;      // Current menu selection index
 bool inSubMenu = false; // Flag for tracking if in a submenu
-int subMenuIndex = 0; // Current submenu selection index
+int subMenuIndex = 0;   // Current submenu selection index
 
 // Game parameters: speed and paddle distance
 int speedMultiplier = 1; // Ball speed multiplier
@@ -111,7 +111,7 @@ bool playing = false; // Game playing flag
 bool changeLCD = false; // Flag indicating when the LCD needs to be updated
 
 // Menu display and sound settings
-String menuDisplay = ""; // Current display screen (menu, game, etc.)
+String menuDisplay = "";  // Current display screen (menu, game, etc.)
 bool soundEnabled = true; // Sound enabled by default
 
 // Sub-sub-menu navigation index
@@ -123,15 +123,15 @@ int maxLen;
 String text1, text2; // Used for holding dynamic text content
 
 // Joystick reading variables
-int joystickY = analogRead(joystick1VRy); // Read Y-axis value for joystick 1
-int joystickX = analogRead(joystick1VRx); // Read X-axis value for joystick 1
+int joystickY = analogRead(joystick1VRy);  // Read Y-axis value for joystick 1
+int joystickX = analogRead(joystick1VRx);  // Read X-axis value for joystick 1
 int joystick2Y = analogRead(joystick2VRy); // Read Y-axis value for joystick 2
 int joystick2X = analogRead(joystick2VRx); // Read X-axis value for joystick 2
 
 // Game frame and row configuration
 const byte rows = 32; // Number of rows on the display (for game drawing)
-int frame; // Frame count for the game loop
-byte game[rows]; // Array for game state representation on the display
+int frame;            // Frame count for the game loop
+byte game[rows];      // Array for game state representation on the display
 
 // Paddle position structure
 typedef struct Position
@@ -145,8 +145,8 @@ t_Position paddle1, paddle2; // Paddle positions for player 1 and 2
 // Ball structure for handling ball movement
 typedef struct Ball
 {
-  int x; // Ball X position
-  int y; // Ball Y position
+  int x;  // Ball X position
+  int y;  // Ball Y position
   int dx; // Ball's X direction (speed and movement)
   int dy; // Ball's Y direction (speed and movement)
 } t_Ball;
@@ -156,15 +156,14 @@ t_Ball ball; // Ball object
 // Joystick structure for handling joystick inputs
 typedef struct Joystick
 {
-  bool left;  // Left direction on joystick
-  bool right; // Right direction on joystick
-  bool up;    // Up direction on joystick
-  bool down;  // Down direction on joystick
+  bool left;   // Left direction on joystick
+  bool right;  // Right direction on joystick
+  bool up;     // Up direction on joystick
+  bool down;   // Down direction on joystick
   bool button; // Button press state
 } t_Joystick;
 
 t_Joystick joystick1, joystick2; // Joystick objects for player 1 and 2
-
 
 // Function prototypes
 void initHardware();
@@ -198,11 +197,11 @@ void joystickButtonISR();
 // Setup function is called once when the program starts
 void setup()
 {
-  initHardware(); // Initialize hardware components (LCD, Joystick, etc.)
-  welcomeAnimation(); // Display a welcome animation (usually startup visuals)
-  displayMenu(); // Display the main menu on the screen
-  randomSeed(analogRead(0)); // Initialize random number generator using analog pin 0 (for more randomness)
-  menuDisplay = "menu"; // Set the initial display screen to the main menu
+  initHardware();                                                                  // Initialize hardware components (LCD, Joystick, etc.)
+  welcomeAnimation();                                                              // Display a welcome animation (usually startup visuals)
+  displayMenu();                                                                   // Display the main menu on the screen
+  randomSeed(analogRead(0));                                                       // Initialize random number generator using analog pin 0 (for more randomness)
+  menuDisplay = "menu";                                                            // Set the initial display screen to the main menu
   attachInterrupt(digitalPinToInterrupt(joystick1SW), joystickButtonISR, FALLING); // Set up interrupt for joystick button press (ISR for FALLING edge)
 }
 
@@ -210,8 +209,8 @@ void setup()
 void loop()
 {
   // Read joystick positions for both players (X and Y axis)
-  joystickY = analogRead(joystick1VRy); // Read Y-axis for joystick 1
-  joystickX = analogRead(joystick1VRx); // Read X-axis for joystick 1
+  joystickY = analogRead(joystick1VRy);  // Read Y-axis for joystick 1
+  joystickX = analogRead(joystick1VRx);  // Read X-axis for joystick 1
   joystick2Y = analogRead(joystick2VRy); // Read Y-axis for joystick 2
   joystick2X = analogRead(joystick2VRx); // Read X-axis for joystick 2
 
@@ -241,13 +240,13 @@ void loop()
     if (playing && !started)
     {
       initializeGame(); // Initialize game settings (paddles, ball, scores)
-      started = true; // Set the flag that the game has started
+      started = true;   // Set the flag that the game has started
     }
 
     // Run the game logic after initialization
     if (started)
     {
-      play(); // Execute the play logic (e.g., move paddles, ball, update game state)
+      play();                                    // Execute the play logic (e.g., move paddles, ball, update game state)
       future = millis() + 100 - difficulty * 30; // Adjust speed based on difficulty (faster for harder levels)
     }
 
@@ -260,7 +259,6 @@ void loop()
   }
 }
 
-
 /**
  * Initializes the hardware components of the system, such as the LCD, LED Matrix,
  * joysticks, and serial communication. Sets up input pins and configurations.
@@ -270,21 +268,21 @@ void initHardware()
   // Initialize the LCD display with 16 columns and 2 rows
   lcd.begin(16, 2);
   lcd.print("Welcome!"); // Display a welcome message on the LCD
-  
+
   // Configure pins for the buzzer and an additional input pin
   pinMode(buzz, INPUT);
   pinMode(in_p, INPUT);
-  
+
   // Initialize the LED Matrix display
   myDisplay.begin();
   myDisplay.setIntensity(matrixBrightness); // Set initial brightness
-  myDisplay.displayClear(); // Clear the display
-  
+  myDisplay.displayClear();                 // Clear the display
+
   // Configure another LED matrix control
   myMatrix.begin();
   myMatrix.control(MD_MAX72XX::INTENSITY, 0); // Set intensity to the lowest
-  myMatrix.clear(); // Clear the matrix
-  
+  myMatrix.clear();                           // Clear the matrix
+
   // Set up the joystick pins as inputs
   pinMode(joystick1VRx, INPUT);
   pinMode(joystick1VRy, INPUT);
@@ -292,16 +290,15 @@ void initHardware()
   pinMode(joystick2VRx, INPUT);
   pinMode(joystick2VRy, INPUT);
   pinMode(joystick2SW, INPUT_PULLUP); // Enable pull-up for the second joystick switch
-  
+
   // Initialize serial communication for debugging or logging
   Serial.begin(28800);
 }
 
-
 /**
  * Plays a tone on the buzzer with the specified frequency and duration.
  * The sound is emitted only if the sound is enabled.
- * 
+ *
  * @param frequency The frequency of the tone to be played (in Hz).
  * @param duration The duration for which the tone should be played (in milliseconds).
  */
@@ -340,10 +337,10 @@ void playGameOverMelody()
 {
   int melody[] = {400, 500, 600, 700};   // Define the frequencies for the notes
   int duration[] = {300, 300, 300, 300}; // Define the duration for each note in the melody
-  for (int i = 0; i < 4; i++) // Loop through each note in the melody
+  for (int i = 0; i < 4; i++)            // Loop through each note in the melody
   {
     playTone(melody[i], duration[i]); // Play each note with the specified frequency and duration
-    delay(duration[i]); // Wait for the duration of the note before playing the next one
+    delay(duration[i]);               // Wait for the duration of the note before playing the next one
   }
 }
 
@@ -363,10 +360,10 @@ void joystickButtonISR()
  */
 void resetToMenu()
 {
-  player1Score = 0; // Reset player 1's score
-  player2Score = 0; // Reset player 2's score
-  started = false;  // Mark the game as not started
-  playing = false;  // Mark the game as not playing
+  player1Score = 0;     // Reset player 1's score
+  player2Score = 0;     // Reset player 2's score
+  started = false;      // Mark the game as not started
+  playing = false;      // Mark the game as not playing
   menuDisplay = "menu"; // Set the display to show the menu
 }
 
@@ -377,10 +374,10 @@ void resetToMenu()
  */
 void welcomeAnimation()
 {
-  myDisplay.begin(); // Initialize the LED matrix
-  myDisplay.displayClear(); // Clear the display
+  myDisplay.begin();                                                  // Initialize the LED matrix
+  myDisplay.displayClear();                                           // Clear the display
   myDisplay.displayScroll("Welcome", PA_CENTER, PA_SCROLL_LEFT, 200); // Scroll "Welcome" across the screen
-  myDisplay.displayClear(); // Clear the display after the animation
+  myDisplay.displayClear();                                           // Clear the display after the animation
 }
 
 /*void startAnimation()
@@ -413,17 +410,17 @@ void welcomeAnimation()
  */
 void startAnimation()
 {
-  myDisplay.displayClear(); // Clear the display before starting
+  myDisplay.displayClear();              // Clear the display before starting
   myDisplay.setTextAlignment(PA_CENTER); // Center-align the text
-  myDisplay.print("3"); // Display "3"
-  delay(1000); // Wait for 1 second
-  myDisplay.print("2"); // Display "2"
-  delay(1000); // Wait for 1 second
-  myDisplay.print("1"); // Display "1"
-  delay(1000); // Wait for 1 second
-  myDisplay.print("GO!"); // Display "GO!"
-  delay(1000); // Wait for 1 second before clearing the display
-  myDisplay.displayClear(); // Clear the display after the animation
+  myDisplay.print("3");                  // Display "3"
+  delay(1000);                           // Wait for 1 second
+  myDisplay.print("2");                  // Display "2"
+  delay(1000);                           // Wait for 1 second
+  myDisplay.print("1");                  // Display "1"
+  delay(1000);                           // Wait for 1 second
+  myDisplay.print("GO!");                // Display "GO!"
+  delay(1000);                           // Wait for 1 second before clearing the display
+  myDisplay.displayClear();              // Clear the display after the animation
 }
 
 /**
@@ -432,9 +429,9 @@ void startAnimation()
  */
 void displayMenu()
 {
-  lcd.clear(); // Clear the LCD
-  lcd.print("<MENU>"); // Display the menu title
-  lcd.setCursor(0, 1); // Set cursor to the second row
+  lcd.clear();                     // Clear the LCD
+  lcd.print("<MENU>");             // Display the menu title
+  lcd.setCursor(0, 1);             // Set cursor to the second row
   lcd.print(menuInput[menuIndex]); // Display the current menu item based on the index
 }
 
@@ -445,9 +442,9 @@ void displayMenu()
  */
 void displaySettings()
 {
-  lcd.clear(); // Clear the LCD
+  lcd.clear();                       // Clear the LCD
   lcd.print(settings[subMenuIndex]); // Display the current setting menu item
-  lcd.setCursor(0, 1); // Set cursor to the second row
+  lcd.setCursor(0, 1);               // Set cursor to the second row
   if (subMenuIndex == 0)
   { // Matrix Brightness
     lcd.print("Brightness: ");
@@ -467,7 +464,7 @@ void displaySettings()
       lcd.print("OFF"); // Display "OFF" if sounds are disabled
   }
   else if (subMenuIndex == 3)
-  { // Score
+  {              // Score
     lcd.clear(); // Clear the screen for the score menu
     lcd.print("Score: ");
     if (scoreEnabled)
@@ -538,7 +535,7 @@ void handleSettings()
     if (subsubMenuIndex == 1)
     {
       if (joystick1.down)
-      { // Toggle sound setting when joystick is moved down
+      {                   // Toggle sound setting when joystick is moved down
         sounds = !sounds; // Toggle the sound ON/OFF
       }
     }
@@ -553,7 +550,7 @@ void handleSettings()
     if (subsubMenuIndex == 1)
     {
       if (joystick1.down || joystick1.up)
-      { // Toggle score display when joystick is moved up or down
+      {                               // Toggle score display when joystick is moved up or down
         scoreEnabled = !scoreEnabled; // Toggle the score display ON/OFF
       }
     }
@@ -684,7 +681,7 @@ void displayHowToPlay()
       "wins the game!",
       "^ Back"};
 
-  lcd.clear(); // Clear the LCD before showing the tutorial
+  lcd.clear();                              // Clear the LCD before showing the tutorial
   lcd.print(mesaje[indexMessageHowToPlay]); // Display the first tutorial message
 
   while (indexMessageHowToPlay < 10)
@@ -697,8 +694,8 @@ void displayHowToPlay()
       lastTimeHowToPlay = currentTime;
 
       if (indexMessageHowToPlay < 10)
-      { // If there are more messages to display
-        lcd.clear(); // Clear the LCD before showing the next message
+      {                                           // If there are more messages to display
+        lcd.clear();                              // Clear the LCD before showing the next message
         lcd.print(mesaje[indexMessageHowToPlay]); // Display the next message
       }
     }
@@ -748,10 +745,10 @@ void scrollTextOnLCD(const char *line1, const char *line2, int delayMs = 300)
  */
 void displayAbout()
 {
-  lcd.clear(); // Clear the LCD
+  lcd.clear();                        // Clear the LCD
   scrollTextOnLCD(name, github, 250); // Scroll the name and GitHub handle
-  lcd.clear(); // Clear the LCD after scrolling
-  lcd.print("^ Back"); // Display the "Back" option
+  lcd.clear();                        // Clear the LCD after scrolling
+  lcd.print("^ Back");                // Display the "Back" option
 }
 
 /**
@@ -762,9 +759,9 @@ void initializeGame()
 {
   for (int i = 0; i < rows; i++)
     game[i] = 0; // Clear the game array for the board state
-  
+
   frame = 0; // Reset frame count
-  
+
   // Set initial positions for paddles
   paddle1.x = 4;
   paddle1.y = 3;
@@ -784,18 +781,18 @@ void initializeGame()
   }
 
   // Set random initial position for the ball
-  ball.x = random(1, 7); 
+  ball.x = random(1, 7);
   if (random(0, 2) == 0)
   {
     ball.y = paddle1.y + 1; // Ball starts near paddle1
-    ball.dy = 1; // Ball direction is down
+    ball.dy = 1;            // Ball direction is down
   }
   else
   {
     ball.y = paddle2.y - 1; // Ball starts near paddle2
-    ball.dy = -1; // Ball direction is up
+    ball.dy = -1;           // Ball direction is up
   }
-  
+
   // Set random horizontal direction for the ball
   int r = random(0, 3);
   if (r == 0)
@@ -833,7 +830,7 @@ void play()
   // Draw paddles and ball in the game state
   game[paddle1.y] = game[paddle1.y] | (1 << paddle1.x) | (1 << (paddle1.x + 1) | (1 << (paddle1.x + 2))); // Paddle 1
   game[paddle2.y] = game[paddle2.y] | (1 << paddle2.x) | (1 << (paddle2.x + 1) | (1 << (paddle2.x + 2))); // Paddle 2
-  game[ball.y] = game[ball.y] | (1 << ball.x); // Ball
+  game[ball.y] = game[ball.y] | (1 << ball.x);                                                            // Ball
 
   // Update ball's position
   ball.x = ball.dx + ball.x;
@@ -848,8 +845,10 @@ void play()
     if (ball.x == paddle1.x + 1)
       ball.dx = 0; // No horizontal movement
     if (ball.x == paddle1.x + 2)
-      ball.dx = 1; // Reflect ball horizontally in the other direction
+      ball.dx = 1;      // Reflect ball horizontally in the other direction
     playPaddle1Sound(); // Play sound when paddle 1 is hit
+    digitalWrite(redled, HIGH);
+    digitalWrite(blueled, LOW);
   }
 
   // Collision detection with paddle2
@@ -861,8 +860,10 @@ void play()
     if (ball.x == paddle2.x + 1)
       ball.dx = 0; // No horizontal movement
     if (ball.x == paddle2.x + 2)
-      ball.dx = 1; // Reflect ball horizontally in the other direction
+      ball.dx = 1;      // Reflect ball horizontally in the other direction
     playPaddle2Sound(); // Play sound when paddle 2 is hit
+    digitalWrite(redled, LOW);
+    digitalWrite(blueled, HIGH);
   }
 
   // Ball collision with the left or right wall
@@ -887,13 +888,21 @@ void play()
       myDisplay.displayClear();
       // Announce winner
       if (player1Score > player2Score)
+      {
         myDisplay.displayScroll("Game Over <3 P1 wins", PA_LEFT, PA_SCROLL_LEFT, 200);
-      else
+        digitalWrite(redled, HIGH);
+        digitalWrite(blueled, LOW);
+      }
+      else if (player1Score < player2Score)
+      {
         myDisplay.displayScroll("Game Over <3 P2 wins", PA_RIGHT, PA_SCROLL_LEFT, 200);
+        digitalWrite(redled, LOW);
+        digitalWrite(blueled, HIGH);
+      }
       myDisplay.displayClear();
 
       playGameOverMelody(); // Play game over sound
-      resetToMenu(); // Return to the main menu
+      resetToMenu();        // Return to the main menu
     }
     else
     {
@@ -901,19 +910,23 @@ void play()
       {
         myDisplay.displayClear();
         if (gameModeSinglePlayer)
-          myDisplay.print("Game Over <3 ROBOT wins"); // Robot wins in single-player mode
+          myDisplay.print("ROBOT wins"); // Robot wins in single-player mode
         else
-          myDisplay.print("Game Over <3 P2 wins"); // Player 2 wins
+          myDisplay.print("P2 wins"); // Player 2 wins
         started = false;
         player2Score++;
+        digitalWrite(redled, LOW);
+        digitalWrite(blueled, HIGH);   
         playGameOverMelody(); // Play game over sound
       }
       if (ball.y > paddle2.y + 1)
       {
         myDisplay.displayClear();
-        myDisplay.print("Game Over <3 P1 wins"); // Player 1 wins
+        myDisplay.print("P1 wins"); // Player 1 wins
         started = false;
         player1Score++;
+        digitalWrite(redled, HIGH);
+        digitalWrite(blueled, LOW);   
         playGameOverMelody(); // Play game over sound
       }
     }
@@ -924,7 +937,7 @@ void play()
     if (gameModeSinglePlayer)
     {
       int r = random(0, 3); // Random movement for AI paddle
-      paddle2.x += r - 1; // AI adjusts paddle position randomly
+      paddle2.x += r - 1;   // AI adjusts paddle position randomly
       if (paddle2.x < 0)
         paddle2.x = 0; // Ensure paddle doesn't go out of bounds
       if (paddle2.x > 5)
@@ -942,11 +955,11 @@ void play()
  */
 void playGame()
 {
-  lcd.clear(); // Clear the screen
+  lcd.clear();             // Clear the screen
   lcd.print("Game Start"); // Display "Game Start"
-  startAnimation(); // Display countdown animation
-  playing = true; // Set the game to the playing state
-  started = false; // Set the game as not started yet (waiting for input)
+  startAnimation();        // Display countdown animation
+  playing = true;          // Set the game to the playing state
+  started = false;         // Set the game as not started yet (waiting for input)
 }
 
 /**
@@ -957,8 +970,8 @@ void playGame()
 void playSound(int frequency, int duration)
 {
   tone(buzz, frequency, duration); // Play the tone
-  delay(duration); // Wait for the sound duration
-  noTone(buzz); // Stop the sound after the delay
+  delay(duration);                 // Wait for the sound duration
+  noTone(buzz);                    // Stop the sound after the delay
 }
 
 /**
@@ -970,10 +983,10 @@ void playSound(int frequency, int duration)
  */
 void proceseazaJoystick(int x, int y, t_Joystick *joystick)
 {
-  joystick->left = x < 200; // Joystick left if X value is below 200
+  joystick->left = x < 200;  // Joystick left if X value is below 200
   joystick->right = x > 800; // Joystick right if X value is above 800
-  joystick->up = y < 200; // Joystick up if Y value is below 200
-  joystick->down = y > 800; // Joystick down if Y value is above 800
+  joystick->up = y < 200;    // Joystick up if Y value is below 200
+  joystick->down = y > 800;  // Joystick down if Y value is above 800
 }
 
 /**
@@ -997,7 +1010,7 @@ void display()
 {
   unsigned long actualMilis = millis(); // Get the current time in milliseconds
   if (actualMilis - prevDisplayMillis < 100)
-    return; // Prevent rapid joystick presses from triggering multiple actions
+    return;                        // Prevent rapid joystick presses from triggering multiple actions
   prevDisplayMillis = actualMilis; // Update previous display time
 
   // Display different screens based on menu selection
@@ -1020,7 +1033,7 @@ void display()
 void navigateMenu()
 {
   t_Joystick joystickNou1, joystickNou2;
-  proceseazaJoystick(joystickY, joystickX, &joystickNou1); // Process joystick input for player 1
+  proceseazaJoystick(joystickY, joystickX, &joystickNou1);   // Process joystick input for player 1
   proceseazaJoystick(joystick2Y, joystick2X, &joystickNou2); // Process joystick input for player 2
 
   joystickNou1.button = digitalRead(joystick1SW) == LOW; // Check if player 1's joystick button is pressed

@@ -1,9 +1,46 @@
 #include <LiquidCrystal.h>
+/**
+ * Motivatie:
+ * Această bibliotecă este folosită pentru a controla un LCD cu interfață paralelă, 
+ * de obicei un display cu 16x2 caractere. Este o alegere foarte comună pentru a afișa 
+ * informații simple, cum ar fi scoruri, mesaje de stare, sau pentru interacțiuni cu utilizatorul (ex. meniu).
+ * LiquidCrystal permite controlul eficient al unui astfel de display, oferind funcții de bază
+ * pentru a scrie caractere și a manipula cursorul.
+ */
 #include <Arduino.h>
+/**
+ * Motivatie:
+ * Această bibliotecă este necesară pentru a folosi funcțiile și structurile de bază ale Arduino.
+ * Este inclusă implicit în toate proiectele Arduino și este necesară pentru a compila și rula codul.
+ */
 #include <MD_Parola.h>
+/**
+ * Motivatie:
+ * Această bibliotecă este folosită pentru a controla un afișaj LED matriceal, cum ar fi cele cu LED-uri roșii sau verzi.
+ * MD_Parola oferă funcționalități avansate pentru a afișa text, animații și efecte grafice pe un astfel de display.
+ * Este o alegere populară pentru proiectele care implică afișaje LED matriceale.
+ */
 #include <MD_MAX72XX.h>
+/**
+ * Motivatie:
+ * Această bibliotecă este folosită pentru a controla un afișaj LED matriceal, cum ar fi cele cu LED-uri roșii sau verzi.
+ * MD_MAX72XX oferă funcționalități de bază pentru a controla un astfel de display și pentru a afișa text sau grafică simplă.
+ * Este o alegere populară pentru proiectele care implică afișaje LED matriceale.
+ */
 #include <SPI.h>
+/**
+ * Motivatie:
+ * Această bibliotecă este necesară pentru a comunica cu dispozitivele SPI (Serial Peripheral Interface).
+ * SPI este un protocol de comunicație serial sincron, folosit pentru a transfera date între dispozitive.
+ * În acest caz, SPI este folosit pentru a comunica cu afișajul LED matriceal și alte dispozitive.
+ */
 #include <LedControl.h>
+/**
+ * Motivatie:
+ * Această bibliotecă este folosită pentru a controla un afișaj LED matriceal, cum ar fi cele cu LED-uri roșii sau verzi.
+ * LedControl oferă funcționalități de bază pentru a controla un astfel de display și pentru a afișa text sau grafică simplă.
+ * Este o alegere populară pentru proiectele care implică afișaje LED matriceale.
+ */
 
 // Hardware definitions
 #define HARDWARE_TYPE MD_MAX72XX::FC16_HW

@@ -194,6 +194,8 @@ t_Ball ball;
  - Potentiometers: Negligible consumption.
 
 ## Video with physical assembly functionality
+https://www.youtube.com/watch?v=Imv30JR2QkI&ab_channel=AlexandruApostu
+[![Watch the video] (https://www.youtube.com/watch?v=Imv30JR2QkI&ab_channel=AlexandruApostu)
 
 ## Conclusions
 

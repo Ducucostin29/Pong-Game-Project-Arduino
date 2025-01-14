@@ -117,7 +117,8 @@ t_Ball ball;
 ![Screenshot 2024-12-14 162404](https://github.com/user-attachments/assets/93762b02-d2bd-49df-b366-54a48f58502c)
 
 ## Wiring Diagram (Wokwi)
-![Screenshot 2024-12-14 160838](https://github.com/user-attachments/assets/e38aaebc-a09d-40c6-9644-1460301231a8)  
+![Screenshot 2025-01-14 111653](https://github.com/user-attachments/assets/67a3354d-3a5f-4825-8cd2-1103ee725de2)
+
 
 1. LCD 16x2:
   - K connected to GND

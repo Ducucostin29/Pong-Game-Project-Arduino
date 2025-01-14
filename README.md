@@ -43,36 +43,36 @@ The menu contains the following submenus:
 - How to play - information about the game
 - About - information about the author
 
-## Elementul de noutate al proiectului
-Elementul de noutate al proiectului constă în implementarea unui mod de joc Single Player în care jucătorul se confruntă cu un robot controlat de algoritmi care imită mișcările unui jucător uman. În acest mod, robotul este configurat cu o paletă extinsă la 4 pătrățele, ceea ce face ca acesta să fie mai capabil în a intercepta mingea și să ofere un nivel de dificultate mai echilibrat.
+## The novelty element of the project
+The novelty element of the project consists in the implementation of a Single Player game mode in which the player faces a robot controlled by algorithms that imitates the movements of a human player. In this mode, the robot is configured with an expanded paddle to 4 squares, making it more capable of intercepting the ball and providing a more balanced difficulty level.
 
-Astfel, în timp ce majoritatea jocurilor Pong tradiționale includ două palete controlate de jucători umani, acest proiect introduce un robot cu o paletă mai mare în modul single player, ceea ce reprezintă o adaptare interesantă și inovativă a jocului clasic pentru a adresa dificultățile întâlnite în jocul împotriva unui programat.
+Thus, while most traditional Pong games include two paddles controlled by human players, this project introduces a robot with a larger paddle in single player mode, which is an interesting and innovative adaptation of the classic game to address the difficulties encountered in the game against a scheduled.
 
-## Utilizarea funcționalităților din laborator în cadrul proiectului
+## Use of laboratory functionalities in the project
 
 ### 1. SPI (Serial Peripheral Interface)
-SPI este un protocol de comunicație serială utilizat pentru a transmite date între microcontroler și diverse periferice. În acest proiect, SPI este utilizat pentru a comunica cu matricea LED (utilizând biblioteca MD_MAX72XX), care este folosită pentru a afișa starea jocului.
+SPI is a serial communication protocol used to transmit data between the microcontroller and various peripherals. In this project, SPI is used to communicate with the LED matrix (using the MD_MAX72XX library), which is used to display the game state.
 
-Justificare: SPI a fost aleasă pentru comunicarea cu matricea LED datorită vitezei și eficienței sale. Spre deosebire de alte protocoale de comunicație serială, SPI permite transmiterea rapidă și de mare viteză a datelor între microcontroler și matricea LED, esențială pentru a reda jocul în timp real, cu actualizări vizuale rapide și fără întârzieri semnificative. Acest lucru este important pentru a asigura o experiență de joc fluidă.
+Rationale: SPI was chosen for LED matrix communication due to its speed and efficiency. Unlike other serial communication protocols, SPI allows fast and high-speed data transmission between the microcontroller and the LED matrix, essential to render the game in real time, with fast visual updates and without significant delays. This is important to ensure a smooth gaming experience.
 
-### 2. Interrupts (Interupții)
-În proiect, se folosește un interrupt pentru a detecta apăsările butonului joystick-ului (prin pinul joystick1SW). Acesta este configurat pentru a declanșa o rutină de întrerupere atunci când butonul este apăsat (FALLING).
+### 2. Interrupts
+In the project, an interrupt is used to detect joystick button presses (via the joystick1SW pin). It is configured to trigger an interrupt routine when the button is pressed (FALLING).
 
-Justificare: Utilizarea întreruperilor este esențială pentru a răspunde în mod eficient și rapid la evenimente externe, precum apăsarea butonului. În loc să verificăm constant starea butonului într-o buclă principală (ceea ce ar consuma resurse și ar introduce întârzieri), întreruperile permit microcontrolerului să reacționeze imediat atunci când butonul este apăsat, fără a întrerupe restul logicii programului.
+Rationale: Using interrupts is essential to respond efficiently and quickly to external events such as button presses. Instead of constantly checking the status of the button in a main loop (which would consume resources and introduce delays), interrupts allow the microcontroller to react immediately when the button is pressed without interrupting the rest of the program logic.
 
-Astfel, întreruperea este folosită pentru a începe sau opri jocul în funcție de starea meniului, asigurând o interacțiune rapidă și eficientă din partea utilizatorului.
+Thus, the interrupt is used to start or stop the game depending on the state of the menu, ensuring fast and efficient user interaction.
 
 ### 3. Debouncing
-Debouncing se referă la tehnica de a filtra semnalele false (de obicei, fluctuațiile electrice) care pot apărea atunci când un buton este apăsat sau eliberat. Fără debouncing, un singur click ar putea fi înregistrat de mai multe ori din cauza oscilațiilor în semnalul electric, ceea ce ar putea duce la comportamente neașteptate ale jocului.
+Debouncing refers to the technique of filtering out spurious signals (usually electrical fluctuations) that can occur when a button is pressed or released. Without debouncing, a single click could be recorded multiple times due to oscillations in the electrical signal, which could lead to unexpected game behaviors.
 
-Justificare: În cazul acestui proiect, debouncing-ul este implementat pentru a preveni apăsările multiple ale butonului joystick-ului, ceea ce ar putea provoca intrări multiple și necontrolate în meniul jocului. Acesta se realizează prin verificarea timpului între acțiuni, asigurându-se că doar o apăsare reală a butonului este înregistrată (fie prin verificarea întreruperii cu un decalaj de timp minim, fie prin utilizarea unui algoritm care ignoră fluctuațiile rapide de semnal).
+Justification: In the case of this project, debouncing is implemented to prevent multiple joystick button presses, which could cause multiple and uncontrolled game menu entries. This is done by checking the time between actions, ensuring that only an actual button press is recorded (either by checking for interruption with a minimal time lag, or by using an algorithm that ignores rapid signal fluctuations).
 
-În proiect, există o implementare a debouncing-ului software, unde se adaugă o verificare de timp între modificările stării butonului, asigurându-se că schimbările sunt efectuate doar atunci când acestea sunt semnificative. Acest lucru asigură o interacțiune mai stabilă și previne erorile cauzate de "apăsările" false ale butonului.
+In the project, there is an implementation of software debouncing, where a time check is added between button state changes, ensuring that changes are made only when they are significant. This ensures a more stable interaction and prevents errors caused by false "presses" of the button.
 
-## Explicați cum, de ce și unde ați realizat optimizări
+## Explain how, why and where you made optimizations
 
-### 1. Optimizarea actualizării display-ului cu matricea LED
-Cum: Utilizarea funcției displayAnimate() din biblioteca MD_Parola pentru a actualiza display-ul doar atunci când este necesar. Acesta ajută la menținerea unui framerate constant și previne supraîncărcarea cu actualizări inutile. De ce: Dacă am actualiza display-ul de fiecare dată în fiecare ciclu al buclei principale, acest lucru ar duce la o utilizare mai mare a resurselor procesorului și ar încetini performanța jocului. Astfel, am ales să actualizăm display-ul doar atunci când este necesar. Unde: În funcția loop(), folosind myDisplay.displayAnimate() și myDisplay.displayReset() pentru a se asigura că actualizarea display-ului se face doar atunci când animarea este completă și este nevoie de o nouă actualizare.
+### 1. Optimizing the update of the display with the LED matrix
+How: Using the displayAnimate() function from the MD_Parola library to update the display only when needed. It helps maintain a constant framerate and prevents overloading with unnecessary updates. Why: If we were to update the display every time in each cycle of the main loop, it would use more CPU resources and slow down the game performance. Thus, we chose to update the display only when necessary. Where: In the loop() function, using myDisplay.displayAnimate() and myDisplay.displayReset() to ensure that the display update is only done when the animation is complete and a new update is needed.
 
 ```
 if (millis() > future) {
@@ -82,16 +82,15 @@ if (millis() > future) {
 }
 ```
 
-### 2. Optimizarea vitezei jocului în funcție de dificultate
-Cum: Viteza bilei a fost ajustată în funcție de dificultate, utilizând un multiplicator de viteză care scade timpul între mișcările bilei pe măsură ce dificultatea crește. De ce: Prin ajustarea vitezei bilei în funcție de dificultate, am creat o experiență de joc mai provocatoare pentru utilizatorii care aleg un nivel mai greu, fără a compromite performanța la nivelele mai ușoare. Unde: În funcția loop(), timpul de actualizare al bilei este ajustat în funcție de dificultate.
+### 2. Game speed optimization based on difficulty
+How: Ball speed has been adjusted for difficulty, using a speed multiplier that decreases the time between ball movements as difficulty increases. Why: By adjusting ball speed based on difficulty, we've created a more challenging game experience for users who choose a harder level, without compromising performance on easier levels. Where: In the loop() function, the update time of the ball is adjusted according to the difficulty.
 
 ```
 future = millis() + 100 - difficulty * 30; // Adjust speed based on difficulty
 ```
 
-### 3. Reducerea consumului de memorie
-Cum: Am utilizat variabile globale și structuri de date optimizate pentru a economisi memorie, cum ar fi utilizarea unui tablou pentru stocarea stării jocului și a paletelor, și am redus numărul de variabile temporare care ar fi putut să consume memorie suplimentară. De ce: Întrucât microcontrolerele de tip Arduino au o memorie limitată, optimizarea memoriei este esențială pentru a preveni depășirea resurselor disponibile și pentru a asigura rularea corectă a jocului. Unde: În structurile de date, cum ar fi t_Position și t_Ball, și în variabilele care stochează starea jocului și scorurile.
-
+### 3. Reducing memory consumption
+How: We used optimized global variables and data structures to save memory, such as using an array to store game state and palettes, and reduced the number of temporary variables that could have consumed extra memory. Why: Since Arduino microcontrollers have limited memory, memory optimization is essential to prevent exceeding available resources and ensure the game runs correctly. Where: In data structures such as t_Position and t_Ball, and in variables that store game state and scores.
 ```
 typedef struct Position {
   int x;

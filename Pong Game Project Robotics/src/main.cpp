@@ -178,6 +178,7 @@ void playTone(int frequency, int duration);
 void startAnimation();
 void welcomeAnimation();
 void navigateMenu();
+void renderGame();
 void play();
 void initializeGame();
 void displayDifficulty();
@@ -185,7 +186,7 @@ void adjustDifficulty();
 void playPaddle1Sound();
 void playPaddle2Sound();
 void playGameOverMelody();
-void proceseazaJoystick(int x, int y, t_Joystick *joystick);
+void processJoystick(int x, int y, t_Joystick *joystick);
 bool compJoisticks(t_Joystick *a, t_Joystick *b);
 void display();
 void displayScoresInGame();
@@ -668,8 +669,8 @@ void displayScores()
  */
 void displayHowToPlay()
 {
-  const unsigned long timpiMesaje[] = {3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000}; // Time for each message
-  const char *mesaje[] = {
+  const unsigned long timesMessages[] = {3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000}; // Time for each message
+  const char *messages[] = {
       "HOW TO PLAY",
       "1. Move paddles",
       "with joystick",
@@ -682,13 +683,13 @@ void displayHowToPlay()
       "^ Back"};
 
   lcd.clear();                              // Clear the LCD before showing the tutorial
-  lcd.print(mesaje[indexMessageHowToPlay]); // Display the first tutorial message
+  lcd.print(messages[indexMessageHowToPlay]); // Display the first tutorial message
 
   while (indexMessageHowToPlay < 10)
   { // Loop through the tutorial messages
     currentTime = millis();
 
-    if (currentTime - lastTimeHowToPlay >= timpiMesaje[indexMessageHowToPlay])
+    if (currentTime - lastTimeHowToPlay >= timesMessages[indexMessageHowToPlay])
     {
       indexMessageHowToPlay++; // Move to the next message
       lastTimeHowToPlay = currentTime;
@@ -696,14 +697,14 @@ void displayHowToPlay()
       if (indexMessageHowToPlay < 10)
       {                                           // If there are more messages to display
         lcd.clear();                              // Clear the LCD before showing the next message
-        lcd.print(mesaje[indexMessageHowToPlay]); // Display the next message
+        lcd.print(messages[indexMessageHowToPlay]); // Display the next message
       }
     }
   }
 
   // Finally, display "< Back"
   lcd.clear();
-  lcd.print(mesaje[10]);
+  lcd.print(messages[10]);
 }
 
 /**
@@ -807,7 +808,7 @@ void initializeGame()
  * Renders the current game state on the LED matrix.
  * The game array represents the state of the game, including paddles and ball.
  */
-void randareJoc()
+void renderGame()
 {
   for (int i = 0; i < rows; i++)
   {
@@ -889,16 +890,17 @@ void play()
       // Announce winner
       if (player1Score > player2Score)
       {
-        myDisplay.displayScroll("Game Over <3 P1 wins", PA_LEFT, PA_SCROLL_LEFT, 200);
+        myDisplay.displayScroll("P1 wins", PA_LEFT, PA_SCROLL_LEFT, 200);
         digitalWrite(redled, HIGH);
         digitalWrite(blueled, LOW);
       }
       else if (player1Score < player2Score)
       {
-        myDisplay.displayScroll("Game Over <3 P2 wins", PA_RIGHT, PA_SCROLL_LEFT, 200);
+        myDisplay.displayScroll("P2 wins", PA_RIGHT, PA_SCROLL_LEFT, 200);
         digitalWrite(redled, LOW);
         digitalWrite(blueled, HIGH);
       }
+      myDisplay.displayScroll("Game Over", PA_CENTER, PA_SCROLL_LEFT, 200);
       myDisplay.displayClear();
 
       playGameOverMelody(); // Play game over sound
@@ -945,7 +947,7 @@ void play()
     }
   }
 
-  randareJoc(); // Render the game state to the LED matrix
+  renderGame(); // Render the game state to the LED matrix
   // Serial.println("randare joc"); // Uncomment for debugging purposes
 }
 
@@ -981,7 +983,7 @@ void playSound(int frequency, int duration)
  * @param y The Y-axis value of the joystick.
  * @param joystick The joystick object to be updated.
  */
-void proceseazaJoystick(int x, int y, t_Joystick *joystick)
+void processJoystick(int x, int y, t_Joystick *joystick)
 {
   joystick->left = x < 200;  // Joystick left if X value is below 200
   joystick->right = x > 800; // Joystick right if X value is above 800
@@ -1033,8 +1035,8 @@ void display()
 void navigateMenu()
 {
   t_Joystick joystickNou1, joystickNou2;
-  proceseazaJoystick(joystickY, joystickX, &joystickNou1);   // Process joystick input for player 1
-  proceseazaJoystick(joystick2Y, joystick2X, &joystickNou2); // Process joystick input for player 2
+  processJoystick(joystickY, joystickX, &joystickNou1);   // Process joystick input for player 1
+  processJoystick(joystick2Y, joystick2X, &joystickNou2); // Process joystick input for player 2
 
   joystickNou1.button = digitalRead(joystick1SW) == LOW; // Check if player 1's joystick button is pressed
   joystickNou2.button = digitalRead(joystick2SW) == LOW; // Check if player 2's joystick button is pressed
